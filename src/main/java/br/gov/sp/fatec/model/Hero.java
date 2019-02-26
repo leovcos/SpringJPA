@@ -39,6 +39,14 @@ public class Hero{
     private Classroom classroom;
 
 
+	public Classroom getClassroom() {
+		return classroom;
+	}
+
+	public void setClassroom(Classroom classroom) {
+		this.classroom = classroom;
+	}
+
 	public String getName() {
 		return name;
 	}

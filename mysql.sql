@@ -1,19 +1,19 @@
-CREATE SCHEMA `new_schema` DEFAULT CHARACTER SET utf8 ;
+CREATE SCHEMA `boku_no_hero_academia` DEFAULT CHARACTER SET utf8 ;
 
 CREATE TABLE `boku_no_hero_academia`.`classrooms` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`id`));
   
 CREATE TABLE `boku_no_hero_academia`.`quirks` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`));
 
 CREATE TABLE `boku_no_hero_academia`.`teachers` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  `birthday` DATE NOT NULL,
+  `birthday` DATE NULL,
   `classroom_id` INT NOT NULL,
   `quirk_id` INT NOT NULL,
   PRIMARY KEY (`id`));
@@ -39,9 +39,9 @@ ADD CONSTRAINT `fk_teachers_2`
 
 
 CREATE TABLE `boku_no_hero_academia`.`heros` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(20) NOT NULL,
-  `birthday` DATETIME NOT NULL,
+  `birthday` DATE NULL,
   `quirk_id` INT(11) NOT NULL,
   `classroom_id` INT(11) NOT NULL,
   PRIMARY KEY (`id`));
