@@ -10,8 +10,8 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.gov.sp.fatec.model.Usuario;
-import br.gov.sp.fatec.repository.UsuarioRepository;
+import br.gov.sp.fatec.model.Hero;
+import br.gov.sp.fatec.repository.HeroRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -19,26 +19,22 @@ import br.gov.sp.fatec.repository.UsuarioRepository;
 @Rollback
 public class SpringDataJpaTests {
 
-	private static final String NOME = "Usuário Test";
-	private static final String SENHA = "Test";
+	private static final String NAME = "Usuário Test";
+	private static final String PASSWORD = "Test";
 	
 	@Autowired
-	private UsuarioRepository usuarioRepo;
+	private HeroRepository heroRepo;
 	
-	/**
-	 * @param usuarioRepo the usuarioRepo to set
-	 */
-	public void setUsuarioRepo(UsuarioRepository usuarioRepo) {
-		this.usuarioRepo = usuarioRepo;
+	public void setUsuarioRepo(HeroRepository usuarioRepo) {
+		this.heroRepo = usuarioRepo;
 	}
 
 	@Test
 	public void testeInsercaoOk() {
-		Usuario usuario = new Usuario();
-		usuario.setNome(NOME);
-		usuario.setSenha(SENHA);
-		usuarioRepo.save(usuario);
-		assertTrue(usuario.getId() != null);
+		Hero hero = new Hero();
+		hero.setName(NAME);
+		heroRepo.save(hero);
+		assertTrue(hero.getId() != null);
 	}
 
 }
