@@ -11,13 +11,13 @@ import javax.persistence.Table;
 @Table(name = "classrooms")
 public class Classroom {
 
-	@Id 
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "id")
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private Integer id;
-    
-    @Column(name = "name", unique=true, length = 50, nullable = false)
-    private String name;
+
+	@Column(name = "name", unique = true, length = 50, nullable = false)
+	private String name;
 
 	public Integer getId() {
 		return id;
