@@ -1,5 +1,6 @@
 package br.gov.sp.fatec.model;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -27,9 +28,19 @@ public class Hero{
     
     @Column(name = "name", unique=true, length = 20, nullable = false)
     private String name;
+    
+    @Column(name = "birthday", nullable = true)
+    private Date birthday;
 
+    public Date getBirthday() {
+		return birthday;
+	}
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "quirk_id", nullable = false)
     private Quirk quirk;
 

@@ -1,6 +1,6 @@
 package br.gov.sp.fatec;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -8,8 +8,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
-import br.gov.sp.fatec.model.Hero;
-import br.gov.sp.fatec.model.Quirk;
+import br.gov.sp.fatec.model.Classroom;
+import br.gov.sp.fatec.repository.ClassroomRepository;
 import br.gov.sp.fatec.service.ClassroomService;
 import br.gov.sp.fatec.service.HeroService;
 
@@ -20,7 +20,9 @@ public class SpringDataJpaApplication implements CommandLineRunner {
 	@Autowired
 	private HeroService heroService;
 	
-
+	@Autowired
+	private ClassroomRepository classroomRepo;
+	
 	@Autowired
 	private ClassroomService classroomService;
 
@@ -34,7 +36,8 @@ public class SpringDataJpaApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		heroService.addHero("Midoriya", "1-A", "One for All");
+		//heroService.addHero("Alexandre", "3-C", "Rider");
+		
 //		ArrayList<Hero> murias = (ArrayList<Hero>) heroService.findHero("Muria");
 //		for (Hero hero : murias) {
 //			System.out.println(hero.getName());
