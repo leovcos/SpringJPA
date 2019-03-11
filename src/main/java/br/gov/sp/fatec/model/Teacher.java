@@ -1,9 +1,7 @@
 package br.gov.sp.fatec.model;
 
 import java.sql.Date;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,29 +10,27 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "teachers")
-public class Teacher{
-	@Id 
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "id")
+public class Teacher {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private Integer id;
-    
-    @Column(name = "name", length = 45, nullable = false)
-    private String name;
-    
-    @Column(name = "birthday", nullable = false)
-    private Date birthday;
 
+	@Column(name = "name", length = 45, nullable = false)
+	private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "classroom_id", nullable = false)
-    private Classroom classroom;
-    
-    public Date getBirthday() {
+	@Column(name = "birthday", nullable = false)
+	private Date birthday;
+
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "classroom_id", nullable = false)
+	private Classroom classroom;
+
+	public Date getBirthday() {
 		return birthday;
 	}
 
@@ -51,15 +47,15 @@ public class Teacher{
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "quirk_id", nullable = false)
-    private Quirk quirk;
-    
-    public Quirk getQuirk() {
-		return quirk;
+	@JoinColumn(name = "quirk_id", nullable = false)
+	private Quirk quirk;
+
+	public Integer getId() {
+		return id;
 	}
 
-	public void setQuirk(Quirk quirk) {
-		this.quirk = quirk;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -70,11 +66,11 @@ public class Teacher{
 		this.name = name;
 	}
 
-	public Integer getId() {
-		return id;
+	public Quirk getQuirk() {
+		return quirk;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setQuirk(Quirk quirk) {
+		this.quirk = quirk;
 	}
 }
