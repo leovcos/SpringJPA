@@ -15,34 +15,8 @@ import br.gov.sp.fatec.service.HeroService;
 
 @SpringBootApplication
 @EnableConfigurationProperties
-public class SpringDataJpaApplication implements CommandLineRunner {
-	
-	@Autowired
-	private HeroService heroService;
-	
-	@Autowired
-	private ClassroomRepository classroomRepo;
-	
-	@Autowired
-	private ClassroomService classroomService;
-
+public class SpringDataJpaApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SpringDataJpaApplication.class, args);
-	}
-	
-	public void setUsuarioService(HeroService heroService) {
-		this.heroService = heroService;
-	}
-
-	@Override
-	public void run(String... args) throws Exception {
-		//heroService.addHero("Alexandre", "3-C", "Rider");
-		
-//		ArrayList<Hero> murias = (ArrayList<Hero>) heroService.findHero("Muria");
-//		for (Hero hero : murias) {
-//			System.out.println(hero.getName());
-//		}
-		
-//		heroService.deleteHero("Teste JPA");
 	}
 }

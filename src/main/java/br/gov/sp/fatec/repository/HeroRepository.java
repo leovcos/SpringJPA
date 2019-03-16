@@ -1,13 +1,17 @@
 package br.gov.sp.fatec.repository;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 import br.gov.sp.fatec.model.Hero;
 
-public interface HeroRepository extends CrudRepository<Hero, Long> {
+public interface HeroRepository extends PagingAndSortingRepository<Hero, Integer> {
 
 	public Hero findByName(String name);
 	
@@ -23,4 +27,8 @@ public interface HeroRepository extends CrudRepository<Hero, Long> {
 	
 	@Query("select h from Hero h where h.name like %?1%")
 	public List<Hero> findHero(String name);
+	
+	public Optional<Hero> findById(Integer id);
+	
+	public Page<Hero> findAll(Pageable pageable);
 }

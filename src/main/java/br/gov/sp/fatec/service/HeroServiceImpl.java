@@ -1,8 +1,11 @@
 package br.gov.sp.fatec.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,6 +65,16 @@ public class HeroServiceImpl implements HeroService {
 	public void deleteHero(String name) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Optional<Hero> findHeroById(Integer id) {
+		return heroRepo.findById(id);
+	}
+
+	@Override
+	public Page<Hero> getHeros(Pageable pageable) {
+        return heroRepo.findAll(pageable);
 	}
 
 }
