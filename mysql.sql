@@ -79,7 +79,7 @@ CREATE TABLE `boku_no_hero_academia`.`user` (
   PRIMARY KEY (`id`));
 
   ALTER TABLE `boku_no_hero_academia`.`user`
-ADD INDEX `fk_user_idx` (`quirk_id` ASC);
+ADD INDEX `fk_user_idx` (`authority_id` ASC);
 ALTER TABLE `boku_no_hero_academia`.`user`
 ADD CONSTRAINT `fk_user`
   FOREIGN KEY (`authority_id`)
