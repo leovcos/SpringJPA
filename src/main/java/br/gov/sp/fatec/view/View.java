@@ -8,4 +8,6 @@ public class View {
 	public static class HeroComplete extends HeroShort{
 	}
 
+	public static class UserComplete {
+	}
 }

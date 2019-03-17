@@ -65,4 +65,24 @@ ADD CONSTRAINT `fk_heros_2`
   REFERENCES `boku_no_hero_academia`.`quirks` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
-  
+
+CREATE TABLE `boku_no_hero_academia`.`authority` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`));
+
+CREATE TABLE `boku_no_hero_academia`.`user` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NOT NULL,
+  `pass` VARCHAR(512) NOT NULL,
+  `authority_id` INT NOT NULL,
+  PRIMARY KEY (`id`));
+
+  ALTER TABLE `boku_no_hero_academia`.`user`
+ADD INDEX `fk_user_idx` (`quirk_id` ASC);
+ALTER TABLE `boku_no_hero_academia`.`user`
+ADD CONSTRAINT `fk_user`
+  FOREIGN KEY (`authority_id`)
+  REFERENCES `boku_no_hero_academia`.`authority` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
