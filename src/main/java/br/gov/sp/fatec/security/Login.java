@@ -1,4 +1,4 @@
-package br.gov.sp.fatec.sercurity;
+package br.gov.sp.fatec.security;
 
 public class Login {
 

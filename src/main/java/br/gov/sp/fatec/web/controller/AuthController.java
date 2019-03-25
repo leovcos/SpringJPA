@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import br.gov.sp.fatec.model.User;
-import br.gov.sp.fatec.sercurity.JwtUtils;
-import br.gov.sp.fatec.sercurity.Login;
+import br.gov.sp.fatec.security.JwtUtils;
+import br.gov.sp.fatec.security.Login;
 
 @RestController
 @RequestMapping(value = "/auth")
@@ -30,7 +30,7 @@ public class AuthController {
 		this.auth = auth;
 	}
 
-	@RequestMapping(path = "/sing-in", method = RequestMethod.POST)
+	@RequestMapping(path = "/sign-in", method = RequestMethod.POST)
 	public ResponseEntity<User> login(@RequestBody Login login, HttpServletResponse response)
 			throws JsonProcessingException {
 		Authentication credentials = new UsernamePasswordAuthenticationToken(login.getUsername(), login.getPassword());
