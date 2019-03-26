@@ -18,11 +18,11 @@ public class JwtUtils {
 
 	public static String generateToken(User user) throws JsonProcessingException {
 		ObjectMapper mapper = new ObjectMapper();
-		user.setPass(null);
+		user.setPassword(null);
 		String usuarioJson = mapper.writeValueAsString(user);
 		Date now = new Date();
 		Long hour = 1000L * 60L * 60L;
-		return Jwts.builder().claim("userDetails", usuarioJson).setIssuer("br.gov.sp.fatec").setSubject(user.getName())
+		return Jwts.builder().claim("userDetails", usuarioJson).setIssuer("br.gov.sp.fatec").setSubject(user.getUsername())
 				.setExpiration(new Date(now.getTime() + hour)).signWith(SignatureAlgorithm.HS512, KEY).compact();
 	}
 

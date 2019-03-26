@@ -21,22 +21,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-				.exceptionHandling().authenticationEntryPoint(new RestAuthenticationEntryPoint()).and()
+		http.csrf().disable()
+				.addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+				.exceptionHandling().authenticationEntryPoint(new RestAuthenticationEntryPoint())
+				.and()
 				// this disables session creation on Spring Security
-				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+				.sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 
 	@Override
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService);
 	}
-
-	@Bean
-	public UserDetailsService userDetailsService() {
-		return super.userDetailsService();
-	}
-
+	
 	@Bean
 	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {

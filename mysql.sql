@@ -66,23 +66,39 @@ ADD CONSTRAINT `fk_heros_2`
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
 
-CREATE TABLE `boku_no_hero_academia`.`authority` (
+CREATE TABLE `boku_no_hero_academia`.`authorities` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`));
 
-CREATE TABLE `boku_no_hero_academia`.`user` (
+CREATE TABLE `boku_no_hero_academia`.`users` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(255) NOT NULL,
-  `pass` VARCHAR(512) NOT NULL,
+  `username` VARCHAR(255) NOT NULL,
+  `password` VARCHAR(512) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `users_username_UNIQUE` (`username` ASC));
+
+  CREATE TABLE `boku_no_hero_academia`.`user_authorities` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
   `authority_id` INT NOT NULL,
   PRIMARY KEY (`id`));
 
-  ALTER TABLE `boku_no_hero_academia`.`user`
-ADD INDEX `fk_user_idx` (`authority_id` ASC);
-ALTER TABLE `boku_no_hero_academia`.`user`
-ADD CONSTRAINT `fk_user`
-  FOREIGN KEY (`authority_id`)
-  REFERENCES `boku_no_hero_academia`.`authority` (`id`)
-  ON DELETE NO ACTION
-  ON UPDATE NO ACTION;
+  ALTER TABLE `boku_no_hero_academia`.`user_authorities`
+    ADD INDEX `fk_user_authorities_authority_idx` (`authority_id` ASC);
+  ALTER TABLE `boku_no_hero_academia`.`user_authorities`
+    ADD INDEX `fk_user_authorities_user_idx` (`user_id` ASC);
+
+ ALTER TABLE `boku_no_hero_academia`.`user_authorities`
+    ADD CONSTRAINT `fk_user_authorities_authority`
+	  FOREIGN KEY (`authority_id`)
+	  REFERENCES `boku_no_hero_academia`.`authorities` (`id`)
+	  ON DELETE NO ACTION
+	  ON UPDATE NO ACTION;
+	 
+ALTER TABLE `boku_no_hero_academia`.`user_authorities`
+    ADD CONSTRAINT `fk_user_authorities_user`
+      FOREIGN KEY (`user_id`)
+      REFERENCES `boku_no_hero_academia`.`users` (`id`)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION;

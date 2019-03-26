@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import br.gov.sp.fatec.view.View.UserComplete;
 
 @Entity
-@Table(name = "authority")
+@Table(name = "authorities")
 public class Authority implements GrantedAuthority {
 
 	private static final long serialVersionUID = 3078636239920155012L;
@@ -28,12 +28,6 @@ public class Authority implements GrantedAuthority {
 	@Column(unique = true, length = 20, nullable = false)
 	@JsonView(UserComplete.class)
 	private String name;
-
-	@Override
-	public String getAuthority() {
-		// TODO Auto-generated method stub
-		return this.name;
-	}
 
 	public Long getId() {
 		return id;
@@ -49,6 +43,11 @@ public class Authority implements GrantedAuthority {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public String getAuthority() {
+		return this.name;
 	}
 
 }

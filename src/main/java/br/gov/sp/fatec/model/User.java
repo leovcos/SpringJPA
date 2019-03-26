@@ -22,9 +22,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import br.gov.sp.fatec.view.View.UserComplete;
+import br.gov.sp.fatec.view.View.UserShort;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User implements UserDetails {
 
 	private static final long serialVersionUID = 1507218635788384719L;
@@ -33,22 +34,31 @@ public class User implements UserDetails {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column
 	@JsonView({ UserComplete.class })
-	private Long id;
+	private Integer id;
 
 	@Column(unique = true, length = 20, nullable = false)
-	@JsonView({ UserComplete.class })
-	private String name;
+	@JsonView({ UserShort.class })
+	private String username;
 
 	@Column(length = 50, nullable = false)
-	@JsonView({ UserComplete.class })
-	private String pass;
+	@JsonView({ UserShort.class })
+	private String password;
 
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "authority_id") })
+	@JoinTable(name = "user_authorities", 
+	joinColumns = { @JoinColumn(name = "user_id") }, 
+	inverseJoinColumns = { @JoinColumn(name = "authority_id") })
 	@JsonView({ UserComplete.class })
-	@XmlElement(name = "autorizacao")
-	private List<Authority> authority;
+	private List<Authority> authorities;
+	
+	public void addAuthority(Authority authority) {
+		this.authorities.add(authority);
+	}
+
+	public void setAuthorities(List<Authority> authorities) {
+		this.authorities = authorities;
+	}
+
 
 	@Override
 	@JsonIgnore
@@ -77,51 +87,34 @@ public class User implements UserDetails {
 	@Override
 	@JsonIgnore
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return this.authority;
+		return this.authorities;
 	}
 
 	@Override
 	@JsonIgnore
 	public String getPassword() {
-		return this.pass;
+		return this.password;
 	}
 
 	@Override
 	@JsonIgnore
 	public String getUsername() {
-		return this.name;
+		return this.username;
 	}
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setPassword(String password) {
+		this.password= password;
 	}
-
-	public String getPass() {
-		return pass;
-	}
-
-	public void setPass(String pass) {
-		this.pass = pass;
-	}
-
-	public List<Authority> getAuthority() {
-		return authority;
-	}
-
-	public void setAuthority(List<Authority> authority) {
-		this.authority = authority;
-	}
-
 }
