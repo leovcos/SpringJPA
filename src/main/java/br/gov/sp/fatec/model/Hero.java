@@ -27,7 +27,7 @@ public class Hero {
 	@JsonView({View.HeroComplete.class})
 	private Integer id;
     
-    @Column(name = "name", unique=true, length = 20, nullable = false)
+    @Column(name = "name", length = 255, nullable = false)
     @JsonView({View.HeroShort.class})
     private String name;
     

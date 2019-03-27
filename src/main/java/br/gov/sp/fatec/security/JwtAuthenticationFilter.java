@@ -18,26 +18,25 @@ import br.gov.sp.fatec.model.User;
 
 public class JwtAuthenticationFilter extends GenericFilterBean {
 
-	private static String HEADER = "Authorization";
+    private static String HEADER = "Authorization";
 
-	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-		try {
-			HttpServletRequest servletRequest = (HttpServletRequest) request;
-			String authorization = servletRequest.getHeader(HEADER);
-			if (authorization != null) {
-				User user = JwtUtils.parseToken(authorization.replaceAll("Bearer ", ""));
-				Authentication credentials = new UsernamePasswordAuthenticationToken(user.getUsername(),
-						user.getPassword(), user.getAuthorities());
-				SecurityContextHolder.getContext().setAuthentication(credentials);
-			}
-			chain.doFilter(request, response);
-		} catch (Throwable t) {
-			HttpServletResponse servletResponse = (HttpServletResponse) response;
-			t.printStackTrace();
-			servletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, t.getMessage());
-		}
-	}
+        try {
+            HttpServletRequest servletRequest = (HttpServletRequest) request;
+            String authorization = servletRequest.getHeader(HEADER);
+            if (authorization != null) {
+                User user = JwtUtils.parseToken(authorization.replaceAll("Bearer ", ""));
+                Authentication credentials = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), user.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(credentials);
+            }
+            chain.doFilter(request, response);
+        }
+        catch(Throwable t) {
+            HttpServletResponse servletResponse = (HttpServletResponse) response;
+            t.printStackTrace();
+            servletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, t.getMessage());
+        }
+    }
 }

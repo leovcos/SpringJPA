@@ -17,12 +17,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import br.gov.sp.fatec.model.User;
 import br.gov.sp.fatec.model.User;
 import br.gov.sp.fatec.security.JwtUtils;
 import br.gov.sp.fatec.security.Login;
 import br.gov.sp.fatec.service.UserServiceImpl;
+import br.gov.sp.fatec.view.View;
 
 @RestController
 @RequestMapping(value = "/auth")
@@ -39,6 +42,7 @@ public class AuthController {
 	}
 
 	@RequestMapping(path = "/register", method = RequestMethod.POST)
+	@JsonView(View.UserShort.class)
 	public ResponseEntity<?> save(@RequestBody Login login, HttpServletRequest request, HttpServletResponse response) {
 		User user = new User();
 		user.setUsername(login.getUsername());
@@ -54,23 +58,16 @@ public class AuthController {
 		
 		return new ResponseEntity<User>(user, HttpStatus.CREATED);
 	}
-
-	@RequestMapping(path = "/sign-in", method = RequestMethod.POST)
-	public ResponseEntity<User> login(@RequestBody Login login, HttpServletResponse response)
-			throws JsonProcessingException {
-		Authentication credentials = new UsernamePasswordAuthenticationToken(login.getUsername(), login.getPassword());
+    
+	@RequestMapping(path = "/login", method = RequestMethod.POST)
+	@JsonView(View.UserShort.class)
+    public ResponseEntity<User> login(@RequestBody Login login, HttpServletResponse response) throws JsonProcessingException {        
+        UsernamePasswordAuthenticationToken credentials = new UsernamePasswordAuthenticationToken(
+        		login.getUsername(), login.getPassword());
+        
         User user = (User) auth.authenticate(credentials).getPrincipal();
         response.setHeader("Token", JwtUtils.generateToken(user));
         return new ResponseEntity<User>(user, HttpStatus.OK);
-//		System.out.println(login.getUsername());
-//		System.out.println(login.getPassword());
-//		Authentication credentials = new UsernamePasswordAuthenticationToken(login.getUsername(), login.getPassword());
-//		User user = (User) auth.authenticate(credentials).getPrincipal();
-//		System.out.println(user.getUsername());
-//		System.out.println(user.getPassword());
-//		response.setHeader("Token", JwtUtils.generateToken(user));
-//		return new ResponseEntity<User>(user, HttpStatus.OK);
-//		return new ResponseEntity<User>(new User(), HttpStatus.OK);
-	}
+    }
 
 }

@@ -26,7 +26,7 @@ import br.gov.sp.fatec.service.HeroService;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = SpringDataJpaApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
-public class SpringRestApplicationTests {
+public class SpringRestApplicationAuthTests {
 
 	@LocalServerPort
 	private int port;
@@ -39,12 +39,6 @@ public class SpringRestApplicationTests {
 	public void setHeroService(HeroService heroService) {
 		this.heroService = heroService;
 	}
-	
-	@Before
-	public void createTestHero() {
-		Hero hero = heroService.addHero("Midoriya", "1-A", "One for All");
-		System.out.println(hero.getName());
-	}
 
 	private String createURLWithPort(String uri) {
 		return "http://localhost:" + port + uri;
@@ -56,11 +50,7 @@ public class SpringRestApplicationTests {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 		
-		Login login = new Login();
-		login.setUsername("filipe");
-		login.setUsername("123456");
-
-		HttpEntity<Login> entity = new HttpEntity<Login>(login, headers);
+		HttpEntity<String> entity = new HttpEntity<String>("{\"username\": \"filipe\", \"password\": \"123456\"}", headers);
 
 		ResponseEntity<String> response = restTemplate.exchange(
 				createURLWithPort("/auth/register"),
@@ -69,7 +59,28 @@ public class SpringRestApplicationTests {
 				String.class
 		);
 
-		String expected = "{}";
-		JSONAssert.assertEquals(expected, response.getBody(), false);
+		String expected = "{\"username\":\"filipe\"}";
+		System.out.println(response.getBody());
+		JSONAssert.assertEquals(expected, response.getBody(), true);
+	}
+	
+	@Test
+	public void givenAuth_whenPostAuthLogin_thenStatus200() throws JSONException {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+		
+		HttpEntity<String> entity = new HttpEntity<String>("{\"username\": \"filipe\", \"password\": \"123456\"}", headers);
+
+		ResponseEntity<String> response = restTemplate.exchange(
+				createURLWithPort("/auth/login"),
+				HttpMethod.POST,
+				entity,
+				String.class
+		);
+
+		String expected = "{\"username\":\"filipe\"}";
+		System.out.println(response.getBody());
+		JSONAssert.assertEquals(expected, response.getBody(), true);
 	}
 }

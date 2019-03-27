@@ -1,17 +1,16 @@
 package br.gov.sp.fatec.security;
 
 public class Login {
-
+	
 	private String username;
 	private String password;
-
+	
 	public Login() {
 	}
-
+	
 	public String getUsername() {
 		return username;
 	}
-
 	public void setUsername(String username) {
 		this.username = username;
 	}

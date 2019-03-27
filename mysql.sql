@@ -41,6 +41,7 @@ ADD CONSTRAINT `fk_teachers_2`
 CREATE TABLE `boku_no_hero_academia`.`heros` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(20) NOT NULL,
+  `image` VARCHAR(255) NOT NULL,
   `birthday` DATE NULL,
   `quirk_id` INT(11) NOT NULL,
   `classroom_id` INT(11) NOT NULL,

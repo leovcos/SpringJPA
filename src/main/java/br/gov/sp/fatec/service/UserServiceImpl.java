@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
 		return userRepo.save(user);
 	}
 
-	private String md5(String senha) {
+	public static String md5(String senha) {
 		try {
 			MessageDigest algorithm = MessageDigest.getInstance("MD5");
 			byte messageDigest[] = algorithm.digest(senha.getBytes("UTF-8"));

@@ -13,7 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -41,7 +43,6 @@ public class User implements UserDetails {
 	private String username;
 
 	@Column(length = 50, nullable = false)
-	@JsonView({ UserShort.class })
 	private String password;
 
 	@ManyToMany(fetch = FetchType.EAGER)
