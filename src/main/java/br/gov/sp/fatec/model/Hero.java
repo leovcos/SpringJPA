@@ -24,28 +24,30 @@ public class Hero {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	@JsonView({View.HeroComplete.class})
+	@JsonView({View.HeroShort.class, View.HeroComplete.class})
 	private Integer id;
     
     @Column(name = "name", length = 255, nullable = false)
-    @JsonView({View.HeroShort.class})
+    @JsonView({View.HeroShort.class, View.HeroCompleteExceptId.class})
     private String name;
     
     @Column(name = "image", length = 255, nullable = true)
-    @JsonView({View.HeroShort.class})
+    @JsonView({View.HeroShort.class, View.HeroCompleteExceptId.class})
     private String image;
     
     @Column(name = "birthday", nullable = true)
-    @JsonView({View.HeroShort.class})
+    @JsonView({View.HeroShort.class, View.HeroCompleteExceptId.class})
     private Date birthday;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "quirk_id", nullable = false)
+    @JsonView({View.HeroComplete.class, View.HeroCompleteExceptId.class})
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Quirk quirk;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "classroom_id", nullable = false)
+    @JsonView({View.HeroComplete.class, View.HeroCompleteExceptId.class})
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	private Classroom classroom;
 
@@ -63,6 +65,14 @@ public class Hero {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 	public Date getBirthday() {

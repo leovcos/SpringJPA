@@ -31,6 +31,49 @@ public class HeroServiceImpl implements HeroService {
 
 	@Override
 	@Transactional
+	public Hero save(Hero hero) throws Exception {
+		if (hero.getName() == null || hero.getName().trim() == "") throw new Exception("Campo nome ('name') vazio");
+		if (hero.getClassroom() == null) throw new Exception("Campo sala ('classroom') vazio");
+		if (hero.getQuirk() == null) throw new Exception("Campo poder ('quirk') vazio");
+
+		hero.setName(hero.getName().trim());
+		Classroom classroom = null;
+		Quirk quirk = null;
+		
+		try {
+			if (hero.getClassroom().getId() == null) throw new Exception();
+			classroom = classroomRepo.findById(hero.getClassroom().getId()).get();
+		} catch (Exception e) {
+			if (hero.getClassroom().getName() == null) {
+				throw new Exception("Sala não encontrada");
+				
+			}
+			classroom = new Classroom();
+			classroom.setName(hero.getClassroom().getName());
+			classroomRepo.save(classroom);
+		}
+		
+		try {
+			if (hero.getQuirk().getId() == null) throw new Exception();
+			quirk = quirkRepo.findById(hero.getQuirk().getId()).get();
+		} catch (Exception e) {
+			if (hero.getQuirk().getName() == null) {
+				throw new Exception("Poder não encontrado");
+			}
+			quirk = new Quirk();
+			quirk.setName(hero.getQuirk().getName());
+			quirkRepo.save(quirk);
+		}
+		
+		
+		hero.setClassroom(classroom);
+		hero.setQuirk(quirk);
+
+		return heroRepo.save(hero);
+	}
+
+	@Override
+	@Transactional
 	public Hero addHero(String name, String nameClassroom, String nameQuirk) {
 		Classroom classroom = classroomRepo.findByName(nameClassroom);
 		Quirk quirk = quirkRepo.findByName(nameQuirk);
@@ -75,6 +118,11 @@ public class HeroServiceImpl implements HeroService {
 	@Override
 	public Page<Hero> getHeros(Pageable pageable) {
         return heroRepo.findAll(pageable);
+	}
+
+	@Override
+	public Page<Hero> getHerosByName(String name, Pageable pageable) {
+        return heroRepo.findByNameLike(name, pageable);
 	}
 
 }

@@ -31,4 +31,7 @@ public interface HeroRepository extends PagingAndSortingRepository<Hero, Integer
 	public Optional<Hero> findById(Integer id);
 	
 	public Page<Hero> findAll(Pageable pageable);
+	
+	public Page<Hero> findByNameLike(String name, Pageable pageable);
+	
 }

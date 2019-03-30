@@ -1,15 +1,19 @@
 package br.gov.sp.fatec.web.controller;
 
-import java.util.Optional;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,20 +34,45 @@ public class HeroController {
 		this.heroService = heroService;
 	}
 	
+	@RequestMapping(value = "/create", method = RequestMethod.POST)
+	@ResponseBody
+	@Transactional
+	@JsonView(View.HeroComplete.class)
+	public ResponseEntity<?>  createHero(@RequestBody Hero hero) {
+		try {
+			hero = heroService.save(hero);
+		} catch (Exception e) {
+			Map<String,String> errorResponse = new HashMap<String, String>();
+			errorResponse.put("message", e.getMessage());
+			return new ResponseEntity<Map<String,String>>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+			
+		}
+	    return new ResponseEntity<Hero>(hero, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<Page<Hero>> findPaginated(Pageable pageable) {
-		Page<Hero> resultPage = heroService.getHeros(pageable);
+	@JsonView(View.HeroShort.class)
+	public ResponseEntity<Page<Hero>> findPaginated(@RequestParam(value="name", required=false) String name, Pageable pageable) {
+		Page<Hero> resultPage = null;
+		if (name == null) {
+			resultPage = heroService.getHeros(pageable);
+		} else {
+			resultPage = heroService.getHerosByName(name, pageable);
+		}
 	    return new ResponseEntity<Page<Hero>>(resultPage, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
-	@JsonView(View.HeroComplete.class)
+	@JsonView(View.HeroCompleteExceptId.class)
 	public ResponseEntity<Hero> searchById(@PathVariable("id") Integer id) {
-		Optional<Hero> optionalHero = heroService.findHeroById(id);
-		Hero hero = optionalHero.get();
-		if(hero == null) {
-			return new ResponseEntity<Hero>(HttpStatus.NOT_FOUND);
+		Hero hero = null;
+		try {
+			hero = heroService.findHeroById(id).get();
+			hero.getClassroom();
+			hero.getQuirk();
+		} catch (Exception e) {
+			return new ResponseEntity<Hero>(HttpStatus.NOT_FOUND);	
 		}
 		return new ResponseEntity<Hero>(hero, HttpStatus.OK);
 	}	

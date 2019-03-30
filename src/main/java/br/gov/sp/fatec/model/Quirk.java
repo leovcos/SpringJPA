@@ -7,6 +7,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import br.gov.sp.fatec.view.View;
+
 @Entity
 @Table(name = "quirks")
 public class Quirk {
@@ -17,6 +21,7 @@ public class Quirk {
 	private Integer id;
 
 	@Column(name = "name", unique = true, length = 254, nullable = false)
+    @JsonView({View.HeroComplete.class, View.HeroCompleteExceptId.class})
 	private String name;
 
 	public Integer getId() {
