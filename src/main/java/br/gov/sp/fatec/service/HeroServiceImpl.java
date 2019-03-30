@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +32,7 @@ public class HeroServiceImpl implements HeroService {
 
 	@Override
 	@Transactional
+	@PreAuthorize("isAuthenticated()")
 	public Hero save(Hero hero) throws Exception {
 		if (hero.getName() == null || hero.getName().trim() == "") throw new Exception("Campo nome ('name') vazio");
 		if (hero.getClassroom() == null) throw new Exception("Campo sala ('classroom') vazio");
@@ -111,16 +113,19 @@ public class HeroServiceImpl implements HeroService {
 	}
 
 	@Override
+	@PreAuthorize("isAuthenticated()")
 	public Optional<Hero> findHeroById(Integer id) {
 		return heroRepo.findById(id);
 	}
 
 	@Override
+	@PreAuthorize("isAuthenticated()")
 	public Page<Hero> getHeros(Pageable pageable) {
         return heroRepo.findAll(pageable);
 	}
 
 	@Override
+	@PreAuthorize("isAuthenticated()")
 	public Page<Hero> getHerosByName(String name, Pageable pageable) {
         return heroRepo.findByNameLike(name, pageable);
 	}

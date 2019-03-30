@@ -44,6 +44,10 @@ public class Authority implements GrantedAuthority {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public void setAuthority(String authority) {
+		this.name = authority;
+	}
 
 	@Override
 	public String getAuthority() {
