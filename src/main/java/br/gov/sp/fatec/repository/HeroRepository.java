@@ -33,5 +33,9 @@ public interface HeroRepository extends PagingAndSortingRepository<Hero, Integer
 	public Page<Hero> findAll(Pageable pageable);
 	
 	public Page<Hero> findByNameLike(String name, Pageable pageable);
+
+	public Page<Hero> findByQuirkNameLike(String quirkName, Pageable pageable);
+
+	public Page<Hero> findByNameAndQuirkName(String name, String quirkName, Pageable pageable);
 	
 }

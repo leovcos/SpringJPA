@@ -130,4 +130,12 @@ public class HeroServiceImpl implements HeroService {
         return heroRepo.findByNameLike(name, pageable);
 	}
 
+	public Page<Hero> getHerosByQuirkName(String quirkName, Pageable pageable) {
+        return heroRepo.findByQuirkNameLike(quirkName, pageable);
+	}
+
+	public Page<Hero> getHerosByNameAndQuirkName(String name, String quirkName, Pageable pageable) {
+        return heroRepo.findByNameAndQuirkName(name, quirkName, pageable);
+	}
+
 }

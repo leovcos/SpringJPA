@@ -53,12 +53,16 @@ public class HeroController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	@ResponseBody
 	@JsonView(View.HeroShort.class)
-	public ResponseEntity<Page<Hero>> findPaginated(@RequestParam(value="name", required=false) String name, Pageable pageable) {
+	public ResponseEntity<Page<Hero>> findPaginated(@RequestParam(value="quirkName", required=false) String quirkName, @RequestParam(value="name", required=false) String name, Pageable pageable) {
 		Page<Hero> resultPage = null;
-		if (name == null) {
+		if (name == null && quirkName == null) {
 			resultPage = heroService.getHeros(pageable);
-		} else {
+		} else if (name != null && quirkName != null) {
+			resultPage = heroService.getHerosByNameAndQuirkName(name, quirkName, pageable);
+		} else if (name != null && quirkName == null) {
 			resultPage = heroService.getHerosByName(name, pageable);
+		} else {
+			resultPage = heroService.getHerosByQuirkName(quirkName, pageable);
 		}
 	    return new ResponseEntity<Page<Hero>>(resultPage, HttpStatus.OK);
 	}
