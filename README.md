@@ -1,5 +1,9 @@
-# Spring-JPA
+# Boku no Hero Academia API
 
-## Diagrama do Banco de dados
+## Database diagram
 
-![diagrama do bando de dados](boku_no_hero_academia_db_diagram.png "Modelo Banco de dados")
+![database diagram](boku_no_hero_academia_db_diagram.png "Database diagram")
+
+## Documentation
+
+Available at [Apiary.io](https://bokunoheroacademia.docs.apiary.io)
