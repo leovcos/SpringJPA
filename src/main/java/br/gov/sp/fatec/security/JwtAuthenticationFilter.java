@@ -21,9 +21,16 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
     private static String HEADER = "Authorization";
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse res, FilterChain chain) throws IOException, ServletException {
 
         try {
+            HttpServletResponse response = (HttpServletResponse) res;
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE, PATCH");
+            response.setHeader("Access-Control-Max-Age", "3600");
+            response.setHeader("Access-Control-Allow-Headers", "Origin, Authorization, Content-Type, Accept");
+            response.setHeader("Access-Control-Expose-Headers", "Token");
+            
             HttpServletRequest servletRequest = (HttpServletRequest) request;
             String authorization = servletRequest.getHeader(HEADER);
             if (authorization != null) {
@@ -34,7 +41,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
             chain.doFilter(request, response);
         }
         catch(Throwable t) {
-            HttpServletResponse servletResponse = (HttpServletResponse) response;
+            HttpServletResponse servletResponse = (HttpServletResponse) res;
             t.printStackTrace();
             servletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, t.getMessage());
         }
