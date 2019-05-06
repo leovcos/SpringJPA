@@ -14,7 +14,7 @@ public interface HeroService {
 	
 	public Hero addHero(String name, String nameClassroom, String nameQuirk);
 	
-	public void deleteHero(String name);
+	public void deleteHero(Integer id);
 	
 	public List<Hero> findHero(String name);
 

@@ -112,9 +112,10 @@ public class HeroServiceImpl implements HeroService {
 	@Override
 	@Transactional
 	@PreAuthorize("hasAuthority('ADMIN')")
-	public void deleteHero(String name) {
-		// TODO Auto-generated method stub
-		
+	public void deleteHero(Integer id) {
+		Optional<Hero> heroOptional = heroRepo.findById(id);
+		Hero hero = heroOptional.get();
+		heroRepo.delete(hero);
 	}
 
 	@Override

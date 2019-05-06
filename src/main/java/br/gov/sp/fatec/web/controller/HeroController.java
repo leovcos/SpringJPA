@@ -79,5 +79,16 @@ public class HeroController {
 			return new ResponseEntity<Hero>(HttpStatus.NOT_FOUND);	
 		}
 		return new ResponseEntity<Hero>(hero, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+	@JsonView(View.HeroCompleteExceptId.class)
+	public ResponseEntity<Hero> deleteById(@PathVariable("id") Integer id) {
+		try {
+			heroService.deleteHero(id);
+		} catch (Exception e) {
+			return new ResponseEntity<Hero>(HttpStatus.NOT_FOUND);	
+		}
+		return new ResponseEntity<Hero>(HttpStatus.OK);
 	}	
 }
