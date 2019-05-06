@@ -111,6 +111,7 @@ public class HeroServiceImpl implements HeroService {
 
 	@Override
 	@Transactional
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public void deleteHero(String name) {
 		// TODO Auto-generated method stub
 		
