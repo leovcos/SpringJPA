@@ -103,3 +103,6 @@ ALTER TABLE `boku_no_hero_academia`.`user_authorities`
       REFERENCES `boku_no_hero_academia`.`users` (`id`)
       ON DELETE NO ACTION
       ON UPDATE NO ACTION;
+      
+INSERT INTO `boku_no_hero_academia`.`authorities` (`name`) VALUES ('ADMIN');
+

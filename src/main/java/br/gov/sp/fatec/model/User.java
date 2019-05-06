@@ -49,7 +49,7 @@ public class User implements UserDetails {
 	@JoinTable(name = "user_authorities", 
 	joinColumns = { @JoinColumn(name = "user_id") }, 
 	inverseJoinColumns = { @JoinColumn(name = "authority_id") })
-	@JsonView({ UserComplete.class })
+	@JsonView({ UserShort.class, UserComplete.class })
 	private List<Authority> authorities;
 	
 	public void addAuthority(Authority authority) {

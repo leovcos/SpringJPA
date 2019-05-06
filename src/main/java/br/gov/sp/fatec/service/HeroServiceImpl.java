@@ -32,7 +32,7 @@ public class HeroServiceImpl implements HeroService {
 
 	@Override
 	@Transactional
-	@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public Hero save(Hero hero) throws Exception {
 		if (hero.getName() == null || hero.getName().trim() == "") throw new Exception("Campo nome ('name') vazio");
 		if (hero.getClassroom() == null) throw new Exception("Campo sala ('classroom') vazio");
@@ -48,11 +48,13 @@ public class HeroServiceImpl implements HeroService {
 		} catch (Exception e) {
 			if (hero.getClassroom().getName() == null) {
 				throw new Exception("Sala não encontrada");
-				
 			}
-			classroom = new Classroom();
-			classroom.setName(hero.getClassroom().getName());
-			classroomRepo.save(classroom);
+			classroom = classroomRepo.findByName(hero.getClassroom().getName());
+			if (classroom == null) {
+				classroom = new Classroom();
+				classroom.setName(hero.getClassroom().getName());
+				classroomRepo.save(classroom);	
+			}
 		}
 		
 		try {
@@ -62,11 +64,13 @@ public class HeroServiceImpl implements HeroService {
 			if (hero.getQuirk().getName() == null) {
 				throw new Exception("Poder não encontrado");
 			}
-			quirk = new Quirk();
-			quirk.setName(hero.getQuirk().getName());
-			quirkRepo.save(quirk);
+			quirk = quirkRepo.findByName(hero.getQuirk().getName());
+			if (quirk == null) {
+				quirk = new Quirk();
+				quirk.setName(hero.getQuirk().getName());
+				quirkRepo.save(quirk);	
+			}
 		}
-		
 		
 		hero.setClassroom(classroom);
 		hero.setQuirk(quirk);
