@@ -91,4 +91,21 @@ public class HeroController {
 		}
 		return new ResponseEntity<Hero>(HttpStatus.OK);
 	}	
+	
+	@RequestMapping(value = "/increase-power/{id}", method = RequestMethod.POST)
+	@ResponseBody
+	@Transactional
+	@JsonView(View.HeroComplete.class)
+	public ResponseEntity<?>  increaseHeroPower(@PathVariable("id") Integer id) {
+		try {
+			Hero hero = heroService.findHeroById(id).get();
+			heroService.increasePowerById(hero);
+		} catch (Exception e) {
+			Map<String,String> errorResponse = new HashMap<String, String>();
+			errorResponse.put("message", e.getMessage());
+			return new ResponseEntity<Map<String,String>>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+			
+		}
+	    return new ResponseEntity<Hero>(HttpStatus.OK);
+	}
 }

@@ -31,6 +31,10 @@ public class Hero {
     @JsonView({View.HeroShort.class, View.HeroCompleteExceptId.class})
     private String name;
     
+    @Column(name = "power", length = 11, nullable = false)
+    @JsonView({View.HeroShort.class, View.HeroCompleteExceptId.class})
+    private Integer power;
+    
     @Column(name = "image", length = 255, nullable = true)
     @JsonView({View.HeroShort.class, View.HeroCompleteExceptId.class})
     private String image;
@@ -97,6 +101,14 @@ public class Hero {
 
 	public void setClassroom(Classroom classroom) {
 		this.classroom = classroom;
+	}
+
+	public int getPower() {
+		return this.power;
+	}
+
+	public void setPower(Integer power) {
+		this.power = power;
 	}
 
 }

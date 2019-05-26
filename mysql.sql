@@ -106,3 +106,6 @@ ALTER TABLE `boku_no_hero_academia`.`user_authorities`
       
 INSERT INTO `boku_no_hero_academia`.`authorities` (`name`) VALUES ('ADMIN');
 
+ALTER TABLE `boku_no_hero_academia`.`heros` 
+ADD COLUMN `power` INT(11) NOT NULL DEFAULT 1 AFTER `classroom_id`;
+

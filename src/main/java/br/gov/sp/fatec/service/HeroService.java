@@ -23,4 +23,6 @@ public interface HeroService {
 	public Page<Hero> getHeros(Pageable pageable);
 	
 	public Page<Hero> getHerosByName(String name, Pageable pageable);
+
+	void increasePowerById(Hero hero);
 }

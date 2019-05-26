@@ -144,4 +144,10 @@ public class HeroServiceImpl implements HeroService {
         return heroRepo.findByNameAndQuirkName(name, quirkName, pageable);
 	}
 
+	@Override
+	public void increasePowerById(Hero hero) {
+		hero.setPower(hero.getPower() + 1);
+		heroRepo.save(hero);
+	}
+
 }
