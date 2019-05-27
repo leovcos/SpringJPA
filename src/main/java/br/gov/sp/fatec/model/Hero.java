@@ -33,7 +33,7 @@ public class Hero {
     
     @Column(name = "power", length = 11, nullable = false)
     @JsonView({View.HeroShort.class, View.HeroCompleteExceptId.class})
-    private Integer power;
+    private Integer power = 1;
     
     @Column(name = "image", length = 255, nullable = true)
     @JsonView({View.HeroShort.class, View.HeroCompleteExceptId.class})
